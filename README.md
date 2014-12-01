@@ -2,7 +2,7 @@
 
 A cleaner Ruby wrapper for the Infuseit API.
 
-This gem in an altered version of [Nathan Levitt's gem](https://github.com/nateleavitt/Infuseit). The original gem uses a flat structure. I prefer namespaced. For example, I prefer `Infuseit::Contacts.all` to `Infuseit.all_contacts`, and `Infuseit::Contacts.find(1)` to `Infuseit.contact_load(1)`. I simply re-organized the gem accordingly. Code credit goes to Nathan.
+This gem in an altered version of [Nathan Levitt's gem](https://github.com/nateleavitt/infusionsoft). The original gem uses a flat structure. I prefer namespaced. For example, I prefer `Infuseit::Contacts.all` to `Infuseit.all_contacts`, and `Infuseit::Contacts.find(1)` to `Infuseit.contact_load(1)`. I simply re-organized the gem accordingly. Code credit goes to Nathan.
 
 This gem also supports the Ruby idiom of underscoring hash keys rather than camel-casing them.
 
