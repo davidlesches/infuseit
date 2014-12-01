@@ -6,11 +6,8 @@ This gem in an altered version of [Nathan Levitt's gem](https://github.com/natel
 
 This gem also supports the Ruby idiom of underscoring hash keys rather than camel-casing them.
 
-## <a name="installation">Installation</a>
+## Installation
     gem install infuseit
-
-## <a name="documentation">Documentation</a>
-[http://rubydoc.info/gems/Infuseit/frames](http://rubydoc.info/gems/Infuseit/frames)
 
 ## Setup
 
@@ -54,6 +51,8 @@ Submit the issue on Github. I handle gems in my spare time, so no promises on wh
 
 ## Copyright
 Copyright (c) 2014 David Lesches
+
+Original code (c) Nathan Levitt
 
 ## License
 Released under standard MIT license.
