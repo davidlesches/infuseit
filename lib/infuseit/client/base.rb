@@ -1,8 +1,20 @@
-require "xmlrpc/client"
-require 'infusionsoft/exception_handler'
+require 'infuseit/configuration'
 
-module Infusionsoft
-  module Connection
+module Infuseit
+  class Base
+
+    attr_accessor :retry_count
+    attr_accessor *Configuration::VALID_OPTION_KEYS
+
+    def initialize options = {}
+      @retry_count = 0
+      options = Infuseit.options.merge(options)
+      Configuration::VALID_OPTION_KEYS.each do |key|
+        send("#{key}=", options[key])
+      end
+    end
+
+
     private
 
     def connection(service_call, *args)
@@ -22,7 +34,7 @@ module Infusionsoft
         ok_to_retry(timeout) ? retry : raise
       rescue XMLRPC::FaultException => xmlrpc_error
         # Catch all XMLRPC exceptions and rethrow specific exceptions for each type of xmlrpc fault code
-        Infusionsoft::ExceptionHandler.new(xmlrpc_error)
+        Infuseit::ExceptionHandler.new(xmlrpc_error)
       end # Purposefully not catching other exceptions so that they can be handled up the stack
 
       api_logger.info "RESULT: #{result.inspect}"
@@ -30,13 +42,17 @@ module Infusionsoft
     end
 
     def ok_to_retry(e)
-      @retry_count += 1
-      if @retry_count <= 5
-        api_logger.warn "WARNING: [#{e}] retrying #{@retry_count}"
+      retry_count += 1
+      if retry_count <= 5
+        api_logger.warn "Retry: #{retry_count}"
         true
       else
         false
       end
+    end
+
+    def get method, service_call, *args
+      connection service_call, *args
     end
 
   end

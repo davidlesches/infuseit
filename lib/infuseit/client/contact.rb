@@ -1,4 +1,4 @@
-module Infusionsoft
+module Infuseit
   class Client
     # Contact service is used to manage contacts. You can add, update and find contacts in
     # addition to managing follow up sequences, tags and action sets.

@@ -1,15 +1,15 @@
-module Infusionsoft
+module Infuseit
   class Client
     # The Email service allows you to email your contacts as well as attaching emails sent
     # elsewhere (this lets you send email from multiple services and still see all communications
-    # inside of Infusionsoft).
+    # inside of Infuseit).
     module Email
 
       # Create a new email template that can be used for future emails
       #
       # @param [String] title
       # @param [String] categories a comma separated list of the categories
-      #   you want this template in Infusionsoft
+      #   you want this template in Infuseit
       # @param [String] from the from address format use is 'FirstName LastName <email@domain.com>'
       # @param [String] to the email address this template is sent to
       # @param [String] cc a comma separated list of cc email addresses
@@ -27,7 +27,7 @@ module Infusionsoft
 
       # This will create an item in the email history for a contact. This does not actually
       # send the email, it only places an item into the email history. Using the API to
-      # instruct Infusionsoft to send an email will handle this automatically.
+      # instruct Infuseit to send an email will handle this automatically.
       #
       # @param [Integer] contact_id
       # @param [String] from_name the name portion of the from address, not the email
@@ -121,7 +121,7 @@ module Infusionsoft
       #
       # @param [Array<Integer>] contact_list is an array of Contact id numbers you would like to send this email to
       # @param [String] The Id of the template to send
-      # @return returns true if the email has been sent, an error will be sent back otherwise.      
+      # @return returns true if the email has been sent, an error will be sent back otherwise.
       def email_send_template(contact_list, template_id)
         response = get('APIEmailService.sendTemplate', contact_list, template_id)
       end

@@ -1,9 +1,9 @@
-module Infusionsoft
+module Infuseit
   class Client
     # The Affiliate service is used to pull commission data and activities for affiliates.
     # With this service, you have access to Clawbacks, Commissions, Payouts, Running Totals,
     # and the Activity Summary. The methods in the Affiliate service mirror the reports
-    # produced inside Infusionsoft.
+    # produced inside Infuseit.
     #
     # @note To manage affiliate information (ie Name, Phone, etc.) you will need to use the Data service.
     module Affiliate

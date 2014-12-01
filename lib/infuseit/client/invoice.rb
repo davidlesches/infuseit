@@ -1,4 +1,4 @@
-module Infusionsoft
+module Infuseit
   class Client
     # The Invoice service allows you to manage eCommerce transactions.
     module Invoice
@@ -58,7 +58,7 @@ module Infusionsoft
       end
 
       # Creates a subscription for a contact. Subscriptions are billing automatically
-      # by infusionsoft within the next six hours. If you want to bill immediately you
+      # by Infuseit within the next six hours. If you want to bill immediately you
       # will need to utilize the create_invoice_for_recurring and then
       # charge_invoice method to accomplish this.
       #
@@ -122,7 +122,7 @@ module Infusionsoft
       # @param [Boolean]
       # @param [Integer] credit_card_id
       # @param [Integer] merchant_account_id
-      # @param [Integer] days_between_retry the number of days Infusionsoft should wait
+      # @param [Integer] days_between_retry the number of days Infuseit should wait
       #   before re-attempting to charge a failed payment
       # @param [Integer] max_retry the maximum number of charge attempts
       # @param [Float] initial_payment_ammount the amount of the very first charge
@@ -150,7 +150,7 @@ module Infusionsoft
         response = get('InvoiceService.calculateAmountOwed', invoice_id)
       end
 
-      # Retrieve all Payment Types currently setup under the Order Settings section of Infusionsoft.
+      # Retrieve all Payment Types currently setup under the Order Settings section of Infuseit.
       #
       # @return [Array]
       def invoice_get_all_payment_otpions
@@ -199,7 +199,7 @@ module Infusionsoft
         response = get('InvoiceService.validateCreditCard', data)
       end
 
-      # Retrieves the shipping options currently setup for the Infusionsoft shopping cart.
+      # Retrieves the shipping options currently setup for the Infuseit shopping cart.
       #
       # @return [Array]
       def invoice_get_all_shipping_options

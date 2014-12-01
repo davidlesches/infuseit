@@ -1,4 +1,4 @@
-module Infusionsoft
+module Infuseit
   class Client
     module File
       def file_upload(contact_id, file_name, encoded_file_base64)
