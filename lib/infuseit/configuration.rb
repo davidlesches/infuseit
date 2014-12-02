@@ -18,11 +18,6 @@ module Infuseit
         yield self
       end
 
-      # Create a hash of the option values
-      def options
-        OPTION_KEYS.each_with_object({}) { |k, sum| sum[k] = send(k) }
-      end
-
     end
 
   end

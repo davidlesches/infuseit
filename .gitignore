@@ -3,3 +3,4 @@ log/*.log
 tmp/**/*
 .DS_Store
 rdoc/
+.ruby-version

@@ -1,59 +1,69 @@
-require 'infuseit/configuration'
+require 'xmlrpc/client'
+require 'infuseit/helpers/hashie'
 
 module Infuseit
-  class Base
+  module Client
+    class Base
+      include Infuseit::Helpers::Hashie
 
-    attr_accessor :retry_count
-    attr_accessor *Configuration::VALID_OPTION_KEYS
 
-    def initialize options = {}
-      @retry_count = 0
-      options = Infuseit.options.merge(options)
-      Configuration::VALID_OPTION_KEYS.each do |key|
-        send("#{key}=", options[key])
+      private
+
+      def connection service_call, *args
+        retry? ? retrying! : raise(InfuseitError, 'Call failed and retries exhausted.')
+
+        begin
+          logger.info "CALL:#{service_call} at:#{Time.now} args:#{args.inspect}"
+          result = client.call(service_call, options.api_key, *args)
+          connection(service_call, *args) if result.nil?
+        rescue Timeout::Error => timeout
+          connection(service_call, *args)
+        rescue XMLRPC::FaultException => xmlrpc_error
+          # Catch all XMLRPC exceptions and rethrow specific exceptions for each type of xmlrpc fault code
+          Infuseit::ExceptionHandler.new(xmlrpc_error)
+        end # Purposefully not catching other exceptions so that they can be handled up the stack
+
+        logger.info "RESULT: #{result.inspect}"
+        return result
       end
-    end
 
-
-    private
-
-    def connection(service_call, *args)
-      client = XMLRPC::Client.new3({
-        'host' => api_url,
-        'path' => "/api/xmlrpc",
-        'port' => 443,
-        'use_ssl' => true
-      })
-      client.http_header_extra = {'User-Agent' => user_agent}
-      begin
-        api_logger.info "CALL: #{service_call} api_key:#{api_key} at:#{Time.now} args:#{args.inspect}"
-        result = client.call("#{service_call}", api_key, *args)
-        if result.nil?; ok_to_retry('nil response') end
-      rescue Timeout::Error => timeout
-        # Retry up to 5 times on a Timeout before raising it
-        ok_to_retry(timeout) ? retry : raise
-      rescue XMLRPC::FaultException => xmlrpc_error
-        # Catch all XMLRPC exceptions and rethrow specific exceptions for each type of xmlrpc fault code
-        Infuseit::ExceptionHandler.new(xmlrpc_error)
-      end # Purposefully not catching other exceptions so that they can be handled up the stack
-
-      api_logger.info "RESULT: #{result.inspect}"
-      return result
-    end
-
-    def ok_to_retry(e)
-      retry_count += 1
-      if retry_count <= 5
-        api_logger.warn "Retry: #{retry_count}"
-        true
-      else
-        false
+      def get method, service_call, *args
+        connection service_call, *args
       end
-    end
 
-    def get method, service_call, *args
-      connection service_call, *args
-    end
+      def retry?
+        retry_count <= 5
+      end
 
+      def retrying!
+        retry_count += 1
+      end
+
+      def retry_count
+        @retry_count ||= 0
+      end
+
+      def options
+        Infuseit::Configuration
+      end
+
+      def logger
+        options.logger
+      end
+
+      def client
+        @client ||= begin
+          client = XMLRPC::Client.new3({
+            'host'    => options.api_url,
+            'path'    => "/api/xmlrpc",
+            'port'    => 443,
+            'use_ssl' => true
+          })
+          client.http_header_extra = { 'User-Agent' => options.user_agent }
+          client
+        end
+      end
+
+    end
   end
 end
