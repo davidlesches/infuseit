@@ -28,10 +28,29 @@ module Infuser
           end
         end
 
+        def define_association type
+          type = type.to_s.underscore
+
+          define_method "#{type}=" do |arg|
+            update_association(type, arg)
+          end
+
+          define_method "clear_#{type}" do
+            clear_association(type)
+          end
+
+          define_method "#{type}" do
+            fetch_association(type)
+          end
+        end
+
         def fieldset
           core = schema.dup
           coll = collection_names.map { |name| Infuser.const_get(name.classify).schema.dup }
-          (core + coll).flatten.compact.map { |f| f.to_s.split('_').map(&:titleize).join }
+          (core + coll).flatten.compact.map do |f|
+            # don't use titlecase or upcase or fields like CompanyID turn into company
+            f.to_s.split('_').map { |w| w[0] = w[0].upcase; w }.join
+          end
         end
 
         def klass_name
@@ -44,7 +63,7 @@ module Infuser
 
       end
 
-      attr_reader :id, :collections
+      attr_reader :id
 
       def initialize data = {}
         data.each do |key, value|
@@ -96,7 +115,7 @@ module Infuser
       end
 
       def load
-        populate client.get("#{service_name}.load", id, fieldset)
+        populate client.get("DataService.load", klass_name, id, fieldset)
       end
 
       def populate hash
@@ -126,16 +145,37 @@ module Infuser
 
       private
 
-      def add options = {}
-        client.get("#{service_name}.add", data)
+      def add
+        @id = client.get("DataService.add", klass_name, data)
+        self
       end
 
-      def update options = {}
-        client.get("#{service_name}.update", id, data)
+      def update
+        client.get("DataService.update", klass_name, id, data)
       end
 
       def client
         @client || raise(Infuser::Error, "No client found. Do not use the #{klass_name} class directly. Use the Infuser::Client instead.")
+      end
+
+      def collections
+        @collections
+      end
+
+      def update_association type, item
+        raise(Infuser::ArgumentError, "Item has not been saved yet and cannot be used as an association") if !item.id
+        client.get("DataService.update", klass_name, id, { "#{type.classify}ID" => item.id })
+        true
+      end
+
+      def clear_association type
+        raise NotImplementedError
+      end
+
+      def fetch_association type
+        id_field = "#{type}_id"
+        raise(Infuser::RecordNotFound) if send(id_field).nil?
+        Infuser::Tables.const_get(type.classify).new(client).find send(id_field)
       end
 
     end

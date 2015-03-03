@@ -18,3 +18,5 @@ Mashery davidlesches /W*!
 
 Delete the auto settings in config.
 
+a = Infuser::Client.new('xc27kj6jcnpzxqv9kvbag5pa')
+c = a.contacts.find 5

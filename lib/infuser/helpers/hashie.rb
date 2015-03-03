@@ -8,6 +8,10 @@ module Infuser
         end
       end
 
+      def safe_classify w
+        w[0] = w[0].upcase; w
+      end
+
     end
   end
 end

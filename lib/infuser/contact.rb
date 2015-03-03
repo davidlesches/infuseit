@@ -2,7 +2,7 @@ module Infuser
   class Contact < Infuser::Models::Base
 
     define_schema :first_name, :middle_name, :nickname, :last_name, :suffix, :title,
-      :company, :company_id, :job_title, :assistant_name, :assistant_phone,
+      :company_id, :job_title, :assistant_name, :assistant_phone,
       :contact_notes, :contact_type,
       :referral_code, :spouse_name, :username, :website
 
@@ -10,6 +10,8 @@ module Infuser
     define_collection :phone
     define_collection :fax
     define_collection :address
+
+    define_association :company
 
 
     private
