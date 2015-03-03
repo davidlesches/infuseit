@@ -1,9 +1,9 @@
-module Infuseit
+module Infuser
   class Client
     # The SearchService allows you to retrieve the results of saved searches and reports that
-    # have been saved within Infuseit. Saved searches/reports are tied to the User that
+    # have been saved within Infuser. Saved searches/reports are tied to the User that
     # created them. This service also allows you to utilize the quick search function found in
-    # the upper right hand corner of your Infuseit application.
+    # the upper right hand corner of your Infuser application.
 
     # @note In order to retrieve the id number for saved searches you will need to utilize
     # the data_query method and query the table called SavedFilter based on the user_id
@@ -41,7 +41,7 @@ module Infuseit
       end
 
       # This allows you to run a quick search via the API. The quick search is the
-      # search bar in the upper right hand corner of the Infuseit application
+      # search bar in the upper right hand corner of the Infuser application
       #
       # @param [String] search_type the type of search (Person, Order, Opportunity, Company, Task,
       #   Subscription, or Affiliate)

@@ -1,4 +1,4 @@
-module Infuseit
+module Infuser
   class Logger
 
     def info msg

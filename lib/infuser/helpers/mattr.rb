@@ -1,6 +1,6 @@
 class Module
 
-  # from: rails / activesupport / lib / active_support / core_ext / module / attribute_accessors.rb
+  # from: rails/activesupport/lib/active_support/core_ext/module/attribute_accessors.rb
 
   def mattr_reader(*syms)
     options = {}

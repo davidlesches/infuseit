@@ -1,6 +1,6 @@
-module Infuseit
+module Infuser
   class Client
-    # The Data service is used to manipulate most data in Infuseit. It permits you to
+    # The Data service is used to manipulate most data in Infuser. It permits you to
     # work on any available tables and has a wide range of uses.
     module Data
       # Adds a record with the data provided.
@@ -85,19 +85,19 @@ module Infuseit
         response = get('DataService.query', table, limit, page, data, selected_fields, by, ascending)
       end
 
-      # Adds a custom field to Infuseit
+      # Adds a custom field to Infuser
       #
       # @param [String] field_type options include Person, Company, Affiliate, Task/Appt/Note,
       #   Order, Subscription, or Opportunity
       # @param [String] name
       # @param [String] data_type the type of field Text, Dropdown, TextArea
       # @param [Integer] header_id see notes here
-      #   http://help.Infuseit.com/developers/services-methods/data/addCustomField
+      #   http://help.Infuser.com/developers/services-methods/data/addCustomField
       def data_add_custom_field(field_type, name, data_type, header_id)
         response = get('DataService.addCustomField', field_type, name, data_type, header_id)
       end
 
-      # Authenticate an Infuseit username and password(md5 hash). If the credentials match
+      # Authenticate an Infuser username and password(md5 hash). If the credentials match
       # it will return back a User ID, if the credentials do not match it will send back an
       # error message
       #
@@ -114,7 +114,7 @@ module Infuseit
       # @param [String] module
       # @param [String] setting
       # @return [String] current values in given application setting
-      # @note to find the module and option names, view the HTML field name within the Infuseit
+      # @note to find the module and option names, view the HTML field name within the Infuser
       #   settings. You will see something such as name="Contact_WebModule0optiontypes" . The portion
       #   before the underscore is the module name. "Contact" in this example. The portion after the
       #   0 is the setting name, "optiontypes" in this example.
