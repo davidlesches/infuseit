@@ -20,3 +20,5 @@ Delete the auto settings in config.
 
 a = Infuser::Client.new('xc27kj6jcnpzxqv9kvbag5pa')
 c = a.contacts.find 5
+
+Infuser::Client.new('xc27kj6jcnpzxqv9kvbag5pa').invoices.all.first.invoice_items.count

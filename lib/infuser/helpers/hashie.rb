@@ -4,7 +4,7 @@ module Infuser
 
       def camelize_hash hash
         hash.each_with_object({}) do |(key, value), h|
-          h[key.to_s.split('_').map(&:titleize).join] = value
+          h[key.to_s.split('_').map { |w| safe_classify(w) }.join] = value
         end
       end
 

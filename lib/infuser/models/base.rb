@@ -13,22 +13,36 @@ module Infuser
           @collection_names || []
         end
 
+        def children_names
+          @children_names || []
+        end
+
         def define_schema *cols
           @schema = *cols
           attr_accessor *cols
         end
 
-        def define_collection type
+        def has_collection type
           type = type.to_s.underscore
           @collection_names ||= []
           @collection_names << type
 
-          define_method type.to_s.underscore.pluralize do
+          define_method type.to_s.underscore do
             collections[type]
           end
         end
 
-        def define_association type
+        def has_many type
+          type = type.to_s.underscore
+          @children_names ||= []
+          @children_names << type
+
+          define_method type.to_s.underscore do
+            children[type]
+          end
+        end
+
+        def belongs_to type
           type = type.to_s.underscore
 
           define_method "#{type}=" do |arg|
@@ -72,6 +86,10 @@ module Infuser
 
         @collections = self.class.collection_names.each_with_object({}) do |name, hash|
           hash[name] = Infuser::Collections::Proxy.new(name)
+        end
+
+        @children = self.class.children_names.each_with_object({}) do |name, hash|
+          hash[name] = Infuser::Collections::ChildProxy.new(self, name)
         end
 
         return self
@@ -150,8 +168,8 @@ module Infuser
         self
       end
 
-      def update
-        client.get("DataService.update", klass_name, id, data)
+      def update fields = data
+        client.get("DataService.update", klass_name, id, fields)
       end
 
       def client
@@ -162,9 +180,13 @@ module Infuser
         @collections
       end
 
+      def children
+        @children
+      end
+
       def update_association type, item
         raise(Infuser::ArgumentError, "Item has not been saved yet and cannot be used as an association") if !item.id
-        client.get("DataService.update", klass_name, id, { "#{type.classify}ID" => item.id })
+        update({ "#{type.classify}ID" => item.id })
         true
       end
 

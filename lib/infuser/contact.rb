@@ -6,12 +6,12 @@ module Infuser
       :contact_notes, :contact_type,
       :referral_code, :spouse_name, :username, :website
 
-    define_collection :email
-    define_collection :phone
-    define_collection :fax
-    define_collection :address
+    belongs_to :company
 
-    define_association :company
+    has_collection :emails
+    has_collection :phones
+    has_collection :faxes
+    has_collection :addresses
 
 
     private

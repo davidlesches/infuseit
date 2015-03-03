@@ -2,6 +2,8 @@ module Infuser
   module Collections
     class Proxy
 
+      # For items with subitems that all live within the same table, eg a contact and it's 3 email addresses
+
       include Enumerable
 
       attr_reader :klass

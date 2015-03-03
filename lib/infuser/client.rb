@@ -1,7 +1,7 @@
 module Infuser
   class Client
 
-    TABLES = %w( contact company )
+    TABLES = %w( contact company invoices invoice_items )
     attr_reader *TABLES.map(&:pluralize)
     attr_reader :access_token
 
@@ -9,6 +9,10 @@ module Infuser
       @access_token = access_token || raise(Infuser::ArgumentError, 'You must specify an access token.')
       setup_associations
       self
+    end
+
+    def inspect
+      "#<#{self.class.name} access_token: #{access_token}>"
     end
 
 
