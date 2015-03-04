@@ -28,6 +28,8 @@ module Infuser
         connection(service_call, *args)
       rescue XMLRPC::FaultException => xmlrpc_error
         Infuser::ExceptionHandler.new(xmlrpc_error)
+      rescue RuntimeError => e
+        e.message.include?('Authorization failed') ? raise(Infuser::ExpiredToken, "Access token is expired or invalid.") : raise
       end
 
       logger.info "RESULT: #{result.inspect}"

@@ -14,6 +14,7 @@ Gem::Specification.new do |spec|
   spec.required_rubygems_version = Gem::Requirement.new('>= 1.3.6')
 
   spec.add_dependency 'activesupport'
+  spec.add_dependency 'rest-client'
   spec.add_development_dependency 'rake'
 
   spec.version = Infuser::VERSION

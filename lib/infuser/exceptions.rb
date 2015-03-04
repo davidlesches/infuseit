@@ -25,6 +25,7 @@ module Infuser
   class FailedLoginAttempt < Error; end
   class NoAccess < Error; end
   class FailedLoginAttemptPasswordExpired < Error; end
+  class ExpiredToken < Error; end
 
   class ExceptionHandler
 

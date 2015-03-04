@@ -3,6 +3,7 @@ module Infuser
 
     OPTION_KEYS = [
       :api_key,
+      :api_secret,
       :user_agent,
       :logger,
       :retry_count,

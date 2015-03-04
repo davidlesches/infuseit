@@ -29,6 +29,7 @@ require 'infuser/invoice_item'
 
 require 'infuser/requester'
 require 'infuser/client'
+require 'infuser/token_refresher'
 
 
 module Infuser
@@ -42,4 +43,5 @@ end
 # delete this
 Infuser::Configuration.configure do |c|
   c.api_key = 'zyh7cwtt24exdxnmhd82ukta'
+  c.api_secret = 'zHnUXTZMn6'
 end
