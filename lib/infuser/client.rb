@@ -1,7 +1,7 @@
 module Infuser
   class Client
 
-    TABLES = %w( contact company invoices invoice_items )
+    TABLES = %w( contact company invoices invoice_items order_items )
     attr_reader *TABLES.map(&:pluralize)
     attr_reader :access_token
 

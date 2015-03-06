@@ -5,6 +5,7 @@ module Infuser
       :invoice_id, :order_item_id
 
     belongs_to :invoice
+    belongs_to :order_item
 
   end
 end

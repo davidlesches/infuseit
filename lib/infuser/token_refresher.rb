@@ -1,5 +1,6 @@
 require 'rest_client'
 require 'base64'
+require 'json'
 
 module Infuser
   class TokenRefresher
@@ -12,7 +13,7 @@ module Infuser
 
     def refresh
       resource = RestClient::Resource.new(endpoint, Infuser::Configuration.api_key, Infuser::Configuration.api_secret)
-      resource.post(params)
+      JSON.parse resource.post(params)
     end
 
 

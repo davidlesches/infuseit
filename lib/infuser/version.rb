@@ -1,5 +1,5 @@
 module Infuser
 
-  VERSION = '0.0.1'
+  VERSION = '0.0.12'
 
 end

@@ -1,5 +1,5 @@
+require 'active_support/core_ext/module/attribute_accessors'
 require 'active_support/core_ext/string/inflections'
-require 'infuser/helpers/mattr'
 require 'infuser/helpers/hashie'
 require 'infuser/version'
 
@@ -20,12 +20,14 @@ require 'infuser/tables/contact'
 require 'infuser/tables/company'
 require 'infuser/tables/invoice'
 require 'infuser/tables/invoice_item'
+require 'infuser/tables/order_item'
 
 require 'infuser/models/base'
 require 'infuser/contact'
 require 'infuser/company'
 require 'infuser/invoice'
 require 'infuser/invoice_item'
+require 'infuser/order_item'
 
 require 'infuser/requester'
 require 'infuser/client'

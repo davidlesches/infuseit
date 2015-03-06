@@ -4,7 +4,8 @@ module Infuser
     define_schema :first_name, :middle_name, :nickname, :last_name, :suffix, :title,
       :company_id, :job_title, :assistant_name, :assistant_phone,
       :contact_notes, :contact_type,
-      :referral_code, :spouse_name, :username, :website
+      :referral_code, :spouse_name, :username, :website,
+      :date_created, :last_updated
 
     belongs_to :company
 

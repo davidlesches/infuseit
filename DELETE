@@ -28,3 +28,10 @@ old -
 new -
 # e4zqgn6ra2q77cz97379j3u7
 # rP23tbasUz
+
+
+EST!
+# last_updated.to_time + 18000 => true utc
+
+{access_token: "gdtd8qhnr64msqvjmqfytccv", token_type: "bearer",
+expires_in: 28800, refresh_token: "52yhfjs79cm664x76dg7k3vs", scope: "|sd222.infusionsoft.com" }

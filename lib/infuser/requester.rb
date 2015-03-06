@@ -73,6 +73,7 @@ module Infuser
           'use_ssl' => true
         })
         client.http_header_extra = { 'User-Agent' => options.user_agent }
+        client.http_header_extra = { "accept-encoding" => "identity" }
         client
       end
     end
