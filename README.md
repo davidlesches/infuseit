@@ -90,7 +90,7 @@ A contact can also have many phones, faxes, emails, and addresses.
 
 You can also assign a contact to a company:
 
-```ruby
+```rubyruby
 client = Infuser::Client.new(access-token)
 company = client.companies.find(1)
 contact = client.contacts.find(1)
@@ -104,7 +104,7 @@ company.contacts # => get all contacts for this company
 
 Both Companies and Contacts have many addresses.
 
-```
+```ruby
 client  = Infuser::Client.new(access-token)
 contact = client.contacts.find(1)
 
@@ -127,7 +127,7 @@ Complete field list: `:street_address, :street_address2, :address_type, :city, :
 
 Both Companies and Contacts have many phones.
 
-```
+```ruby
 client  = Infuser::Client.new(access-token)
 contact = client.contacts.find(1)
 
@@ -150,7 +150,7 @@ Complete field list: `:number, :extension, :type`
 
 Both Companies and Contacts have many faxes.
 
-```
+```ruby
 client  = Infuser::Client.new(access-token)
 contact = client.contacts.find(1)
 
@@ -173,7 +173,7 @@ Complete field list: `:number, :extension, :type`
 
 Both Companies and Contacts have many faxes.
 
-```
+```ruby
 client  = Infuser::Client.new(access-token)
 contact = client.contacts.find(1)
 
