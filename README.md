@@ -215,7 +215,7 @@ An invoice item is a line item on an invoice. Usage: `invoice.invoice_items`
 
 To add an invoice item, see the Invoices section above. Complete field list when reading: `:commission_status, :date_created, :description, :discount, :invoice_amt, :invoice_id, :order_item_id`
 
-Every invoice item belongs to an order item. Order item contain quantity and price per unit information. Usage: `invoice.invoice_items.first.order_item`
+Every invoice item belongs to an order item. These are created automatically by Infusionsoft when adding an invoice item. Order item contain quantity and price per unit information. Usage: `invoice.invoice_items.first.order_item`
 
 Complete field list of order items: `:item_description, :item_name, :item_type, :notes, :order_id, :product_id, :cpu, :ppu, :qty`
 
