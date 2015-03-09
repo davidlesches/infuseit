@@ -90,7 +90,7 @@ A contact can also have many phones, faxes, emails, and addresses.
 
 You can also assign a contact to a company:
 
-```rubyruby
+```ruby
 client = Infuser::Client.new(access-token)
 company = client.companies.find(1)
 contact = client.contacts.find(1)
