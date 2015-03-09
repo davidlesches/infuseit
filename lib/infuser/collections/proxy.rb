@@ -32,6 +32,10 @@ module Infuser
         set.delete item
       end
 
+      def can_add_more?
+        set.size < klass.mappings.keys.max
+      end
+
       def << item
         if set.size == klass.mappings.keys.max
           raise(Infuser::ArgumentError, "The collection is full, you can not add another item.")
