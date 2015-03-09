@@ -40,7 +40,9 @@ Use the [omniauth-infusionsoft](https://github.com/l1h3r/omniauth-infusionsoft) 
 
 Once a user authorizes their account, Infusionsoft returns an `access_token`. You use this `access_token` to begin using this Infuser gem.
 
-#### Contacts
+#### General Structure
+
+All models work the same way, and are as close to ActiveRecord as possible. Here is an example with Contacts.
 
 ```ruby
 client = Infuser::Client.new(access-token)
@@ -74,7 +76,124 @@ contact = client.contacts.find(1)
 contact.destroy
 ```
 
+#### Contacts
+
 Complete field list: `:first_name, :middle_name, :nickname, :last_name, :suffix, :title, :company_id, :job_title, :assistant_name, :assistant_phone, :contact_notes, :contact_type, :referral_code, :spouse_name, :username, :website, :date_created, :last_updated`
+
+A contact can also have many phones, faxes, emails, and addresses. A contact can belong to a company.
+
+#### Companies
+
+Complete field list: `:company, :website, :date_created, :last_updated`. Note that the "name" field for a company is called 'company'. Infusionsoft :)
+
+A contact can also have many phones, faxes, emails, and addresses.
+
+You can also assign a contact to a company:
+
+```ruby
+client = Infuser::Client.new(access-token)
+company = client.companies.find(1)
+contact = client.contacts.find(1)
+contact.company = company # => assigns and saves company 1 to contact
+contact.company # => retrieves company 1
+
+company.contacts # => get all contacts for this company
+```
+
+#### Addresses
+
+Both Companies and Contacts have many addresses.
+
+```
+client  = Infuser::Client.new(access-token)
+contact = client.contacts.find(1)
+
+# See all addresses for this contact
+contact.addresses
+
+# Add an address to this contact
+contact.addresses << Infuser::Address.new(street_address: '123 Broadway')
+contact.save
+
+# Remove an address from this contact
+address = contact.addresses.find(1)
+contact.addresses.remove(address)
+contact.save
+```
+
+Complete field list: `:street_address, :street_address2, :address_type, :city, :state, :country, :postal_code, :zip`
+
+#### Phones
+
+Both Companies and Contacts have many phones.
+
+```
+client  = Infuser::Client.new(access-token)
+contact = client.contacts.find(1)
+
+# See all phones for this contact
+contact.phones
+
+# Add a phone to this contact
+contact.phones << Infuser::Phone.new(number: '1-222-333-4444')
+contact.save
+
+# Remove a phone from this contact
+phone = contact.phones.find(1)
+contact.phones.remove(phone)
+contact.save
+```
+
+Complete field list: `:number, :extension, :type`
+
+#### Faxes
+
+Both Companies and Contacts have many faxes.
+
+```
+client  = Infuser::Client.new(access-token)
+contact = client.contacts.find(1)
+
+# See all faxes for this contact
+contact.faxes
+
+# Add a fax to this contact
+contact.faxes << Infuser::Fax.new(number: '1-222-333-4444')
+contact.save
+
+# Remove a fax from this contact
+fax = contact.faxes.find(1)
+contact.faxes.remove(fax)
+contact.save
+```
+
+Complete field list: `:number, :extension, :type`
+
+#### Emails
+
+Both Companies and Contacts have many faxes.
+
+```
+client  = Infuser::Client.new(access-token)
+contact = client.contacts.find(1)
+
+# See all emails for this contact
+contact.emails
+
+# Add an email to this contact
+contact.emails << Infuser::Email.new(email: 'info@google.com')
+contact.save
+
+# Remove an email from this contact
+email = contact.emails.find(1)
+contact.emails.remove(email)
+contact.save
+```
+
+Complete field list: `:email`
+
+
+
 
 ## Issues
 Submit the issue on Github. I handle gems in my spare time, so no promises on when I can look into things. Pull requests appreciated.
