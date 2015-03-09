@@ -21,8 +21,6 @@ module Infuser
       begin
         logger.info "CALL: #{service_call} at: #{Time.now} args: #{args.inspect} #{options.api_key}"
         result = client.call(service_call, options.api_key, *args)
-        puts '*********************'
-        puts result
         connection(service_call, *args) if result.nil?
       rescue Timeout::Error => timeout
         connection(service_call, *args)

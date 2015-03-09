@@ -2,57 +2,55 @@
 
 A cleaner Ruby wrapper for the InfusionSoft API.
 
-This gem in an altered version of [Nathan Levitt's gem](https://github.com/nateleavitt/infusionsoft). The original gem uses a flat structure. I prefer namespaced. For example, I prefer `Infuser::Contacts.all` to `Infuser.all_contacts`, and `Infuser::Contacts.find(1)` to `Infuser.contact_load(1)`. I simply re-organized the gem accordingly. Code credit goes to Nathan.
+This gem is for use with the Infusionsoft OAuth2 API. If you are using the token-based API, see [Nathan Levitt's gem](https://github.com/nateleavitt/infusionsoft), which this gem is based on.
 
-This gem also supports the Ruby idiom of underscoring hash keys rather than camel-casing them.
+## Philosophy
+
+Infusionsoft has quite the annoying API. One example: field names are not standardized. Another: some API calls require specific arguments in a specific order, others take a hash.
+
+I've gone out of my way to standardize these things behind the scenes in order to provide a cleaner Ruby-esque way of dealing with the API.
+
+## Caveats
+
+I developed this gem as part of a project for a client. It covers companies, contacts, and invoices, but not much else, as that was all the client required. Pull requests are always welcome.
 
 ## Installation
-    gem install infuser
+1. Add the gem to your gemfile.
 
-## Setup
+```
+gem install infuser
+```
 
-Create an initializer file in your Rails app, with:
+2. Create an initializer file in your Rails app, with your Infusionsoft API settings:
 
 ```ruby
-  Infuser.configure do |config|
-    config.api_url = 'Infuser-URL'
-    config.api_key = 'Infuser-API-KEY'
-  end
+Infuser::Configuration.configure do |config|
+  config.api_key    = 'Your-App-API-Key'
+  config.api_secret = 'Your-App-API-Secret'
+end
 ```
+
+Within the configuration file above, you can also set the `logger` as well as `retry_count` for how many times a call should be attempted before giving up.
 
 ## Usage
 
-```
-  # Get a users first and last name using the DataService
-  Infuser.data_load('Contact', contact_id, [:FirstName, :LastName])
+This gem is for use with Infusionsoft's *OAuth2* API, not the token-based API.
 
-  # Get a list of custom fields
-  Infuser.data_find_by_field('DataFormField', 100, 0, 'FormId', -1, ['Name'])
-  # Note, when updating custom fields they are case sensisitve and need to be prefaced with a '_'
+Use the [omniauth-infusionsoft](https://github.com/l1h3r/omniauth-infusionsoft) gem to allow your users to connect and authorize their accounts, just like you would connect [any other OAuth gem](http://railscasts.com/episodes/360-facebook-authentication).
 
-  # Update a contact with specific field values
-  Infuser.contact_update(contact_id, { :FirstName => 'first_name', :Email => 'test@test.com' })
+Once a user authorizes their account, Infusionsoft returns an `access_token`. You use this `access_token` to begin using this Infuser gem.
 
-  # Add a new Contact
-  Infuser.contact_add({:FirstName => 'first_name', :LastName => 'last_name', :Email => 'test@test.com'})
-
-  # Create a blank Invoice
-  invoice_id = Infuser.invoice_create_blank_order(contact_id, description, Date.today, lead_affiliate_id, sale_affiliate_id)
-
-  # Then add item to invoice
-  Infuser.invoice_add_order_item(invoice_id, product_id, product_type, amount, quantity, description_here, notes)
-
-  # Then charge the invoice
-  Infuser.invoice_charge_invoice(invoice_id, notes, credit_card_id, merchange_id, bypass_commissions)
-```
+### Contacts
 
 ## Issues
-Submit the issue on Github. I handle gems in my spare time, so no promises on when I can look into things.
+Submit the issue on Github. I handle gems in my spare time, so no promises on when I can look into things. Pull requests appreciated.
 
 ## Copyright
-Copyright (c) 2014 David Lesches
+Copyright (c) 2014 David Lesches.
 
-Original code (c) Nathan Levitt
+Original based on code from [Nathan Levitt's gem](https://github.com/nateleavitt/infusionsoft).
 
 ## License
-Released under standard MIT license.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
