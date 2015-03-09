@@ -43,9 +43,38 @@ Once a user authorizes their account, Infusionsoft returns an `access_token`. Yo
 #### Contacts
 
 ```ruby
-# client = Infuser::Client.new(access-token)
+client = Infuser::Client.new(access-token)
 
+# retrieve contacts
+client.contacts.all
+
+# find a contact
+client.contacts.find(1)
+
+# search for a contact
+client.contacts.find_by(first_name: 'David', last_name: 'Lesches')
+
+# initialize a contact without saving it
+client.contacts.build(first_name: 'David', last_name: 'Lesches')
+
+# create a new contact
+client.contacts.create(first_name: 'David', last_name: 'Lesches')
+
+# update a contact
+contact = client.contacts.find(1)
+contact.first_name = 'John'
+contact.save
+
+# get a contact's attributes as a hash
+contact = client.contacts.find(1)
+contact.attributes
+
+# delete a contact
+contact = client.contacts.find(1)
+contact.destroy
 ```
+
+Complete field list: `:first_name, :middle_name, :nickname, :last_name, :suffix, :title, :company_id, :job_title, :assistant_name, :assistant_phone, :contact_notes, :contact_type, :referral_code, :spouse_name, :username, :website, :date_created, :last_updated`
 
 ## Issues
 Submit the issue on Github. I handle gems in my spare time, so no promises on when I can look into things. Pull requests appreciated.
