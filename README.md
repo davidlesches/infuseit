@@ -105,9 +105,6 @@ company.contacts # => get all contacts for this company
 Both Companies and Contacts have many addresses.
 
 ```ruby
-client  = Infuser::Client.new(access-token)
-contact = client.contacts.find(1)
-
 # See all addresses for this contact
 contact.addresses
 
@@ -128,9 +125,6 @@ Complete field list: `:street_address, :street_address2, :address_type, :city, :
 Both Companies and Contacts have many phones.
 
 ```ruby
-client  = Infuser::Client.new(access-token)
-contact = client.contacts.find(1)
-
 # See all phones for this contact
 contact.phones
 
@@ -151,9 +145,6 @@ Complete field list: `:number, :extension, :type`
 Both Companies and Contacts have many faxes.
 
 ```ruby
-client  = Infuser::Client.new(access-token)
-contact = client.contacts.find(1)
-
 # See all faxes for this contact
 contact.faxes
 
@@ -171,12 +162,9 @@ Complete field list: `:number, :extension, :type`
 
 #### Emails
 
-Both Companies and Contacts have many faxes.
+Both Companies and Contacts have many emails.
 
 ```ruby
-client  = Infuser::Client.new(access-token)
-contact = client.contacts.find(1)
-
 # See all emails for this contact
 contact.emails
 
@@ -192,8 +180,53 @@ contact.save
 
 Complete field list: `:email`
 
+#### Invoices
 
+Because Infusionsoft is awesome, creating invoices requires specific parameters in exact order.
 
+```ruby
+# 1: contact_id
+# 2: description
+# 3: date
+# 4: lead_affiliate_id (0 should be used if none)
+# 5: sale_affiliate_id (0 should be used if none)
+
+client.invoices.create(1, "A test invoice", Time.zone.now.to_date, 0, 0)
+```
+
+Once an invoice is created, you can add items to it. These too require specific parameters in exact order.
+```ruby
+# 1: product_id
+# 2: type (UNKNOWN = 0, SHIPPING = 1, TAX = 2, SERVICE = 3, PRODUCT = 4, UPSELL = 5, FINANCECHARGE = 6, SPECIAL = 7)
+# 3: price
+# 4: quantity
+# 5: description
+# 6: notes
+
+invoice.add_item(0, 4, 10.00, 3, 'Lollipop Consulting', '')
+```
+
+Complete field list when reading fields from an invoice: `:affiliate_id, :contact_id, :credit_status, :date_created, :description, :invoice_total, :invoice_type, :job_id, :lead_affiliate_id, :pay_plan_status, :pay_status, :product_sold,
+:promo_code, :refund_status, :synced, :total_due, :total_paid`
+
+#### InvoiceItems
+
+An invoice item is a line item on an invoice. Usage: `invoice.invoice_items`
+
+To add an invoice item, see the Invoices section above. Complete field list when reading: `:commission_status, :date_created, :description, :discount, :invoice_amt, :invoice_id, :order_item_id`
+
+Every invoice item belongs to an order item. Order item contain quantity and price per unit information. Usage: `invoice.invoice_items.first.order_item`
+
+Complete field list of order items: `:item_description, :item_name, :item_type, :notes, :order_id, :product_id, :cpu, :ppu, :qty`
+
+## Refreshing Tokens
+
+Infusionsoft access tokens expire after a few hours. You can get a new one using Infuser if you have stored the **refresh\_token**. Every time you sign in to Infusionsoft, you get both an access\_token and a refresh\_token. The access\_token is what you use to retrieve data. Once it expires, you use the refresh\_token to get a new access\_token and refresh\_token.
+
+```ruby
+r = Infuser::TokenRefresher.new(refresh-token)
+r.refresh
+```
 
 ## Issues
 Submit the issue on Github. I handle gems in my spare time, so no promises on when I can look into things. Pull requests appreciated.
