@@ -42,6 +42,11 @@ Once a user authorizes their account, Infusionsoft returns an `access_token`. Yo
 
 #### Contacts
 
+```ruby
+# client = Infuser::Client.new(access-token)
+
+```
+
 ## Issues
 Submit the issue on Github. I handle gems in my spare time, so no promises on when I can look into things. Pull requests appreciated.
 
