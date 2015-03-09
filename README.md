@@ -8,7 +8,7 @@ This gem is for use with the Infusionsoft OAuth2 API. If you are using the token
 
 Infusionsoft has quite the annoying API. One example: field names are not standardized. Another: some API calls require specific arguments in a specific order, others take a hash.
 
-I've gone out of my way to standardize these things behind the scenes in order to provide a cleaner Ruby-esque way of dealing with the API.
+I've gone out of my way to standardize these things behind the scenes in order to provide a cleaner, Ruby-esque way of dealing with the API.
 
 ## Caveats
 
@@ -30,7 +30,7 @@ Infuser::Configuration.configure do |config|
 end
 ```
 
-Within the configuration file above, you can also set the `logger` as well as `retry_count` for how many times a call should be attempted before giving up.
+Within the configuration block above, you can also set the `logger` as well as `retry_count` for how many times a call should be attempted before giving up.
 
 ## Usage
 
@@ -40,7 +40,7 @@ Use the [omniauth-infusionsoft](https://github.com/l1h3r/omniauth-infusionsoft) 
 
 Once a user authorizes their account, Infusionsoft returns an `access_token`. You use this `access_token` to begin using this Infuser gem.
 
-### Contacts
+#### Contacts
 
 ## Issues
 Submit the issue on Github. I handle gems in my spare time, so no promises on when I can look into things. Pull requests appreciated.
