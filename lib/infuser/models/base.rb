@@ -159,7 +159,7 @@ module Infuser
       end
 
       def model_klass
-        Infuser.const_get(klass_name)
+        self.class
       end
 
       def service_name
