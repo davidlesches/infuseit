@@ -14,6 +14,10 @@ module Infuser
     has_collection :faxes
     has_collection :addresses
 
+    INFUSIONSOFT_MAPPING = {
+      'CompanyId' => 'CompanyID',
+      'OwnerId' => 'OwnerID'
+    }
 
     private
 

@@ -3,6 +3,8 @@ module Infuser
     class Base
       include Infuser::Helpers::Hashie
 
+      INFUSIONSOFT_MAPPING = {}
+
       class << self
 
         def schema
@@ -112,7 +114,7 @@ module Infuser
         collections.each do |name, proxy|
           data.merge!(proxy.data)
         end
-        camelize_hash(data).select { |k, v| !v.nil? }
+        camelize_hash(data, klass_name).select { |k, v| !v.nil? }
       end
 
       def new_record?
