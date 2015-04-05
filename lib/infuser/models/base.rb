@@ -114,7 +114,7 @@ module Infuser
         collections.each do |name, proxy|
           data.merge!(proxy.data)
         end
-        camelize_hash(data, klass_name).select { |k, v| !v.nil? }
+        camelize_hash(data).select { |k, v| !v.nil? }
       end
 
       def new_record?
@@ -156,6 +156,10 @@ module Infuser
 
       def klass_name
         self.class.klass_name
+      end
+
+      def model_klass
+        Infuser.const_get(klass_name)
       end
 
       def service_name

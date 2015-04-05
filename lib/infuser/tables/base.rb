@@ -33,7 +33,7 @@ module Infuser
         records = []
 
         begin
-          response = client.get("DataService.query", klass_name, PAGINATION, page, camelize_hash(hash, klass_name), (model_klass.fieldset.dup << 'Id'))
+          response = client.get("DataService.query", klass_name, PAGINATION, page, camelize_hash(hash), (model_klass.fieldset.dup << 'Id'))
           page += 1
           count = response.count
 
