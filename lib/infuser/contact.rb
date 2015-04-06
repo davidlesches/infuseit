@@ -5,7 +5,7 @@ module Infuser
       :company_id, :job_title, :assistant_name, :assistant_phone,
       :contact_notes, :contact_type,
       :referral_code, :spouse_name, :username, :website,
-      :date_created, :last_updated
+      :date_created, :last_updated, :created_by
 
     belongs_to :company
 
@@ -14,6 +14,10 @@ module Infuser
     has_collection :faxes
     has_collection :addresses
 
+    INFUSIONSOFT_MAPPING = {
+      'CompanyId' => 'CompanyID',
+      'OwnerId' => 'OwnerID'
+    }
 
     private
 

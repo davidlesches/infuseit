@@ -3,6 +3,8 @@ module Infuser
     class Base
       include Infuser::Helpers::Hashie
 
+      INFUSIONSOFT_MAPPING = {}
+
       class << self
 
         def schema
@@ -154,6 +156,10 @@ module Infuser
 
       def klass_name
         self.class.klass_name
+      end
+
+      def model_klass
+        self.class
       end
 
       def service_name
